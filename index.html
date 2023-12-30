@@ -1,0 +1,41 @@
+<html>
+	<head>
+
+	</head>
+	<body>
+		<div id="audioBox">
+			<script src="./jquery.min.js"></script>
+			<script type="text/javascript"> 
+				$(document).ready( 
+					function()
+					{ 
+						var arr = [
+						"06.mp3",
+						"05.mp3",
+						"04.mp3",
+						"03.mp3",
+						"02.mp3",
+						"01.mp3",
+						"videoplayback.mp3"                                               
+						];               //把需要播放的歌曲從後往前排，這裏已添加兩首音樂，可繼續添加多個音樂 
+						var myAudio = new Audio(); 
+						myAudio.preload = true; 
+						myAudio.controls = true; 
+						myAudio.src = arr.pop();         //每次讀數組最後一個元素 
+						myAudio.addEventListener('ended', playEndedHandler, false); 
+						myAudio.play(); 
+						document.getElementById("audioBox").appendChild(myAudio); 
+						myAudio.loop = false;//禁止循環，否則無法觸發ended事件 
+						function playEndedHandler()
+						{ 
+							myAudio.src = arr.pop(); 
+							myAudio.play(); 
+							console.log(arr.length); 
+							!arr.length && myAudio.removeEventListener('ended',playEndedHandler,false);//只有一個元素時解除綁定 
+						} 
+					}  
+				);
+			</script>
+		</div>	
+	</body>
+</html>
